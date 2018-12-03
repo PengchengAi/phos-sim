@@ -3,7 +3,7 @@ import sympy as sp
 import numpy as np
 from numpy.linalg import inv
 from scipy import optimize
-from scipy.stats import crystalball
+from scipy.stats import moyal
 
 import hurdle
 
@@ -46,7 +46,7 @@ J = np.stack((data_diff_K, data_diff_t_0), axis=-1)
 # linear approximation
 J_pre = inv(J.T @ J) @ J.T
 
-beta, m = 2, 3
+loc_orig, scale_orig = 0, 0.625
 loc = 2.0
 scale = 0.01
 
@@ -60,7 +60,7 @@ cal_std_list = []
 for i in range(cnt + 1):
     # use hurdle model to simulate
     total_loc = loc + max_delta_loc / cnt * i
-    noise_orig = crystalball.rvs(beta, m, size=3300)
+    noise_orig = moyal.rvs(loc_orig, scale_orig, size=3300)
     cal_list = []
     for j in range(100):
         noise = hurdle.hurdle_func_batch(lambda x : (x + total_loc) * scale, noise_orig[j*33:(j+1)*33])
@@ -87,7 +87,7 @@ fit_fun = lambda t, m, n : fun(t, m, n, value_tau_p, value_base)
 for i in range(samples):
     random_loc = np.random.random()
     total_loc = loc + random_loc * max_delta_loc
-    noise_orig = crystalball.rvs(beta, m, size=33)
+    noise_orig = moyal.rvs(loc_orig, scale_orig, size=33)
     noise = hurdle.hurdle_func_batch(lambda x : (x + total_loc) * scale, noise_orig)
     data = fun(x, value_K, value_t_0, value_tau_p, value_base) + noise
     popt, pcov = optimize.curve_fit(fit_fun, x, data, p0=[4.0, 0.1])
