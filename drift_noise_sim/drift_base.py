@@ -60,14 +60,16 @@ P = np.stack((data_diff_tau_p, data_diff_base), axis=-1)
 # linear approximation
 JP_pre = inv(J.T @ J) @ J.T @ P
 
+min_delta_base = -0.3
 max_delta_base = 0.3
-cnt = 20
+span_delta_base = max_delta_base - min_delta_base
+cnt = 30
 # base varies
 dt_list = []
 fit_list = []
 cal_list = []
 for i in range(cnt + 1):
-    delta_theta = np.array((0.0, max_delta_base / cnt * i)).reshape((2, 1))
+    delta_theta = np.array((0.0, min_delta_base + span_delta_base / cnt * i)).reshape((2, 1))
     total_tau_p = value_tau_p + delta_theta[0, 0]
     total_base = value_base + delta_theta[1, 0]
     
@@ -91,11 +93,25 @@ for i in range(cnt + 1):
 delta_base = [v[1, 0] for v in dt_list]
 fit_delta_K = [v[0] for v in fit_list]
 cal_delta_K = [v[0, 0] for v in cal_list]
-plt.plot(delta_base, fit_delta_K, "o", delta_base, cal_delta_K, "-")
+plt.xlabel("shift of base")
+plt.ylabel("shift of K in curve fitting")
+plt.plot(delta_base, fit_delta_K, "o", label="actual point")
+plt.plot(delta_base, cal_delta_K, "-", label="linear approximation")
+plt.axvline(x=0, color="grey")
+plt.axhline(y=0, color="grey")
+
+plt.legend()
 plt.show()
 
 delta_base = [v[1, 0] for v in dt_list]
 fit_delta_t_0 = [v[1] for v in fit_list]
 cal_delta_t_0 = [v[1, 0] for v in cal_list]
-plt.plot(delta_base, fit_delta_t_0, "o", delta_base, cal_delta_t_0, "-")
+plt.xlabel("shift of base")
+plt.ylabel("shift of t_0 in curve fitting")
+plt.plot(delta_base, fit_delta_t_0, "o", label="actual point")
+plt.plot(delta_base, cal_delta_t_0, "-", label="linear approximation")
+plt.axvline(x=0, color="grey")
+plt.axhline(y=0, color="grey")
+
+plt.legend()
 plt.show()
