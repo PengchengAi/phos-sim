@@ -74,7 +74,7 @@ for i in range(cnt + 1):
     cal_mean_list.append(cal_mean)
     cal_std_list.append(cal_std)
 
-    cal_loc_list.append(total_loc - loc)
+    cal_loc_list.append((total_loc - loc) * scale)
 
     print("finish %d cycle(s)" % (i + 1))
 
@@ -95,7 +95,7 @@ for i in range(samples):
 
     # storage
     fit_delta_beta_list.append(fit_delta_beta)
-    fit_loc_list.append(total_loc - loc)
+    fit_loc_list.append((total_loc - loc) * scale)
 
     # print information
     if not (i+1) % 100:
@@ -120,7 +120,7 @@ plt.scatter(fit_loc_list, fit_delta_K, alpha=0.5, color="r", edgecolors="w", lab
 plt.legend(loc="upper left")
 plt.show()
 
-# plot 
+# plot t_0
 plt.xlabel("shift of noise p.d.f.")
 plt.ylabel("shift of t_0 in curve fitting")
 cal_delta_t_0 = cal_mean_list[:, 1]
