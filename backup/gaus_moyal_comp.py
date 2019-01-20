@@ -7,7 +7,7 @@ fig, ax = plt.subplots(1, 1)
 # plot moyal pdf
 loc, scale = 0.004, 0.006
 x = np.linspace(moyal.ppf(0.01, loc=loc, scale=scale), moyal.ppf(0.99, loc=loc, scale=scale), 100)
-ax.plot(x, moyal.pdf(x, loc, scale), 'r', alpha=0.6, label='moyal pdf')
+ax.plot(x, moyal.pdf(x, loc=loc, scale=scale), 'r', alpha=0.6, label='moyal pdf')
 
 # plot moyal samples
 s_moyal = moyal.rvs(loc, scale, size=1000)
