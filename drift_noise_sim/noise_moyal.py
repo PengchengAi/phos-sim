@@ -117,7 +117,7 @@ plt.ylabel("shift of K in curve fitting")
 cal_delta_K = cal_mean_list[:, 0]
 cal_error_K = cal_std_list[:, 0]
 plt.plot(cal_loc_list, cal_delta_K, "b-", label="avg. of linear approx.")
-plt.fill_between(cal_loc_list, cal_delta_K-cal_error_K, cal_delta_K+cal_error_K, alpha=0.2, edgecolor="b", facecolor="b", label="error band")
+plt.fill_between(cal_loc_list, cal_delta_K-cal_error_K, cal_delta_K+cal_error_K, edgecolor="#6CA6CD", facecolor="#6CA6CD", label="error band")
 
 fit_delta_K = fit_delta_beta_list[:, 0]
 plt.scatter(fit_loc_list, fit_delta_K, alpha=0.5, color="r", edgecolors="w", label="Monte Carlo simulation")
@@ -131,7 +131,7 @@ plt.ylabel("shift of t_0 in curve fitting")
 cal_delta_t_0 = cal_mean_list[:, 1]
 cal_error_t_0 = cal_std_list[:, 1]
 plt.plot(cal_loc_list, cal_delta_t_0, "b-", label="avg. of linear approx.")
-plt.fill_between(cal_loc_list, cal_delta_t_0-cal_error_t_0, cal_delta_t_0+cal_error_t_0, alpha=0.2, edgecolor="b", facecolor="b", label="error band")
+plt.fill_between(cal_loc_list, cal_delta_t_0-cal_error_t_0, cal_delta_t_0+cal_error_t_0, edgecolor="#6CA6CD", facecolor="#6CA6CD", label="error band")
 
 fit_delta_t_0 = fit_delta_beta_list[:, 1]
 plt.scatter(fit_loc_list, fit_delta_t_0, alpha=0.5, color="r", edgecolors="w", label="Monte Carlo simulation")
